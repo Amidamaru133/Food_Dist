@@ -59,13 +59,14 @@ window.addEventListener('DOMContentLoaded', () => {
         };
 
     }
+
     function getZero(num) {
-        if (num >=0 && num < 10){
+        if (num >= 0 && num < 10) {
             return `0${num}`;
         } else {
             return num;
         }
-        
+
     }
 
     function setClock(selector, endtime) {
@@ -75,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
             minutes = timer.querySelector('#minutes'),
             seconds = timer.querySelector('#seconds'),
             timeInterval = setInterval(updateClock, 1000);
-            updateClock();
+        updateClock();
 
         function updateClock() {
             const t = getTimeRemaining(endtime);
@@ -93,4 +94,39 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     setClock('.timer', deadline);
+
+
+    //Modal
+    const btnModal = document.querySelectorAll('[data-modal]'),
+        btnClose = document.querySelectorAll('[data-close]'),
+        modal = document.querySelector('.modal');
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'scroll';
+    }
+
+    btnModal.forEach((elem) => {
+        elem.addEventListener('click', () => {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    btnClose.forEach((elem) => {
+        elem.addEventListener('click', closeModal);
+    });
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) =>{
+        if (e.code === 'Escape' && modal.style.display === 'block'){
+            closeModal();
+        }
+    });
+
 });
